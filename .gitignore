@@ -1,0 +1,4 @@
+.DS_Store
+build/
+src/main/resource/application.properties
+out/

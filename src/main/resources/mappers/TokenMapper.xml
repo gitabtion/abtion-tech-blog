@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="cn.abtion.blog.mappers.TokenMapper">
+    <insert id="createToken" parameterType="cn.abtion.blog.domain.Token">
+        INSERT INTO tokens(`user_id`, `client`,`ip`,`token`, `create_at`, `update_at`, `expires_at`)
+        VALUES (#{userId},#{client},#{ip},#{token},#{createAt},#{updateAt},#{expiresAt});
+    </insert>
+    <select id="getToken" resultType="cn.abtion.blog.domain.Token">
+        SELECT * FROM tokens WHERE user_id = #{userId} AND client = #{client};
+    </select>
+    <select id="getTokenByStr" resultType="cn.abtion.blog.domain.Token">
+        SELECT * FROM tokens WHERE token = #{token};
+    </select>
+    <update id="updateToken" parameterType="cn.abtion.blog.domain.Token">
+        UPDATE tokens SET
+        token = #{token},
+        ip = #{ip},
+        create_at = #{createAt},
+        update_at = #{updateAt},
+        expires_at = #{expiresAt}
+        WHERE user_id = #{userId} AND client = #{client};
+    </update>
+    <delete id="deleteToken">
+        DELETE FROM tokens WHERE token = #{token};
+    </delete>
+</mapper>

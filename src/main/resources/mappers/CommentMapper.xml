@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.abtion.blog.mappers.CommentMapper">
+    <insert id="createConmment" useGeneratedKeys="true" keyProperty="id" parameterType="cn.abtion.blog.domain.Comment">
+        INSERT INTO comments(id, essay_id, user_id, content, create_at)
+        VALUES (#{id}, #{essayId}, #{userId}, #{content}, #{createAt})
+    </insert>
+    <select id="getCommentFromEssayId" resultType="cn.abtion.blog.domain.Comment">
+        SELECT comments.*, users.name as user_name, users.avater as user_avater
+        LEFT JOIN users
+        ON comments.user_id = users.id
+        WHERE comments.essay_id = #{essayId}
+        ORDER BY comments.create_at DESC
+        LIMIT #{page},#{SIZE}
+    </select>
+    <delete id="deleteComment">
+        DELETE FROM comments WHERE id = #{id}
+    </delete>
+</mapper>

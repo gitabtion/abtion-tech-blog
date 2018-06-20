@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.abtion.blog.mappers.UserMapper">
+
+    <select id="getUserById" resultType="cn.abtion.blog.domain.User">
+        SELECT * FROM users WHERE id = #{id};
+    </select>
+
+    <insert id="createUser" useGeneratedKeys="true" keyProperty="id" parameterType="cn.abtion.blog.domain.User">
+        INSERT INTO users(`id`, `name`, `password`, `avatar`, `signature`, `sex`, `type`, `add_on`, `create_at`, `update_at`)
+        VALUES (#{id}, #{name}, #{password}, #{avatar}, #{signature}, #{sex}, #{type}, #{addOn}, #{createAt}, #{updateAt} );
+    </insert>
+
+    <select id="getAllUsers" resultType="cn.abtion.blog.domain.User">
+        SELECT * FROM users
+    </select>
+
+    <select id="getUserByName" resultType="cn.abtion.blog.domain.User">
+        SELECT * FROM users WHERE name = #{name}
+    </select>
+
+    <update id="updateUser" parameterType="cn.abtion.blog.domain.User">
+        UPDATE users SET
+        name = #{name},
+        avatar = #{avatar},
+        password = #{password},
+        signature = #{signature},
+        sex = #{sex},
+        type = #{type}
+        add_on = #{addOn},
+        created_at = #{createAt},
+        updated_at = #{updateAt}
+        WHERE id = #{id};
+    </update>
+</mapper>

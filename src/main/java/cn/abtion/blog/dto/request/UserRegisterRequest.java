@@ -13,7 +13,7 @@ public class UserRegisterRequest {
     private String name;
     @NotBlank
     private String password;
-    @NotNull
+
     private int sex;
 
     private String signature;

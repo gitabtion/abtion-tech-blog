@@ -4,7 +4,9 @@ import cn.abtion.blog.domain.User;
 import cn.abtion.blog.exception.user.NeedLoginException;
 import cn.abtion.blog.service.TokenService;
 import cn.abtion.blog.service.UserService;
+import org.apache.ibatis.plugin.Intercepts;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -19,6 +21,7 @@ import java.util.regex.Pattern;
  * @since 2018/4/26 16:27
  * email abtion@outlook.com
  */
+@Component
 public class TokenInterceptor implements HandlerInterceptor {
     @Autowired
     private TokenService tokenService;
@@ -26,11 +29,11 @@ public class TokenInterceptor implements HandlerInterceptor {
     @Autowired
     private UserService userService;
 
-    private ArrayList<String> unCheckUrlsRegex = new ArrayList<String>() {{
+    private ArrayList<String> unCheckUrlsRegex = new ArrayList<>() {{
 
     }};
 
-    private ArrayList<String> unCheckUrlNormal = new ArrayList<String>() {{
+    private ArrayList<String> unCheckUrlNormal = new ArrayList<>() {{
         add("/user/register");
         add("/user/login");
         add("/error");
@@ -66,7 +69,7 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
 
         User user = userService.getUserById(userId);
-
+        System.out.println(user);
         httpServletRequest.setAttribute("user",user);
 
         return true;
@@ -74,12 +77,12 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-
+        System.out.println("postHandle========================");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-
+        System.out.println("afterCompletion================");
     }
 
 }

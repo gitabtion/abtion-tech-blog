@@ -45,12 +45,15 @@ public class TokenService {
 
     public long checkToken(String token) {
         Token oldToken = tokenMapper.getTokenByStr(token);
+
         if (oldToken == null) {
             return -1;
         }
         if (CHECK_EXPIRE) {
             long currentTime = Utils.createTimestamp();
             if (oldToken.getExpiresAt() < currentTime) {
+                System.out.println(oldToken);
+                System.out.println(currentTime);
                 return -1;
             }
         }

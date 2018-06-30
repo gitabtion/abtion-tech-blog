@@ -1,6 +1,9 @@
 package cn.abtion.blog.mappers;
 
 import cn.abtion.blog.domain.Essay;
+import org.apache.ibatis.annotations.Param;
+
+import java.util.Collection;
 
 /**
  * @author abtion
@@ -8,7 +11,10 @@ import cn.abtion.blog.domain.Essay;
  * email abtion@outlook.com
  */
 public interface EssayMapper {
-    void createEssay(Essay essay);
+    int createEssay(Essay essay);
     int updateEssay(Essay essay);
-    int deleteEssay(int id);
+    int deleteEssay(long id);
+    Essay getEssay(long id);
+    Collection<Essay> getUserEssays(@Param("page")int page,@Param("size")int size,@Param("userId")long userId);
+    Collection<Essay> getMostViewEssays(@Param("num")int num);
 }

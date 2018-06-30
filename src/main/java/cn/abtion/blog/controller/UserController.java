@@ -14,6 +14,7 @@ import cn.abtion.blog.exception.BaseException;
 import cn.abtion.blog.exception.UnknownException;
 import cn.abtion.blog.exception.general.FormValidatorException;
 import cn.abtion.blog.exception.general.PasswordException;
+import cn.abtion.blog.service.TokenService;
 import cn.abtion.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -33,6 +34,9 @@ public class UserController {
 
     @Autowired
     UserService userService;
+    @Autowired
+    TokenService tokenService;
+
     @GetMapping("/{userId}/info")
     public Response getUserInfo(@PathVariable long userId) {
         User user = userService.getUserById(userId);
@@ -47,7 +51,7 @@ public class UserController {
         User user = new User();
         user.setName(registerRequest.getName());
         user.setPassword(registerRequest.getPassword());
-        user.setSex(registerRequest.getSex());
+        user.setSex(2);     // 0 女，1 男，2 未知
         user.setSignature(registerRequest.getSignature());
         user.setType(2);
         long timestamp = Utils.createTimestamp();

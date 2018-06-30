@@ -12,14 +12,19 @@ public class Essay extends Model {
     private String name;
     private String content;
     private int flag;
+    private long viewNum;
 
-    public Essay(long id, long authorId, String tag, String name, String content, int flag) {
+    public Essay() {
+    }
+
+    public Essay(long id, long authorId, String tag, String name, String content, int flag, long viewNum) {
         this.id = id;
         this.authorId = authorId;
         this.tag = tag;
         this.name = name;
         this.content = content;
         this.flag = flag;
+        this.viewNum = viewNum;
     }
 
     public long getId() {
@@ -68,5 +73,13 @@ public class Essay extends Model {
 
     public void setFlag(int flag) {
         this.flag = flag;
+    }
+
+    public long getViewNum() {
+        return viewNum;
+    }
+
+    public void setViewNum(long viewNum) {
+        this.viewNum = viewNum;
     }
 }

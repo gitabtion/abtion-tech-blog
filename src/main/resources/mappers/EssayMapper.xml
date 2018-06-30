@@ -3,17 +3,28 @@
 
 <mapper namespace="cn.abtion.blog.mappers.EssayMapper">
     <insert id="createEssay" useGeneratedKeys="true" keyProperty="id" parameterType="cn.abtion.blog.domain.Essay">
-        INSERT INTO essays(id, author_id, tag, name, content, flag)
-        VALUES (#{id}, #{authorId}, #{tag}, #{name}, #{content}, #{flag})
+        INSERT INTO essays(id, author_id, tag, name, content, flag,view_num)
+        VALUES (#{id}, #{authorId}, #{tag}, #{name}, #{content}, #{flag},#{viewNum})
     </insert>
     <update id="updateEssay" parameterType="cn.abtion.blog.domain.Essay">
-        FROM essay SET
-        tag = #{tag}
-        name = #{name}
-        content = #{content}
-        flag = #{flag}
+        UPDATE essays SET
+        tag = #{tag},
+        name = #{name},
+        content = #{content},
+        flag = #{flag},
+        view_num = #{viewNum}
+        WHERE id = #{id}
     </update>
     <delete id="deleteEssay">
         DELETE FROM essays WHERE id = #{id}
     </delete>
+    <select id="getEssay" resultType="cn.abtion.blog.domain.Essay">
+        select * from essays where id = #{id}
+    </select>
+    <select id="getUserEssays" resultType="cn.abtion.blog.domain.Essay">
+        select * from essays where author_id = #{userId}
+    </select>
+    <select id="getMostViewEssays" resultType="cn.abtion.blog.domain.Essay">
+        select * from essays order by desc limit 0,#{num}
+    </select>
 </mapper>

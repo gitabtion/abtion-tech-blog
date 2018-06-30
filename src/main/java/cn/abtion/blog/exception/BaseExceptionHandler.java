@@ -7,6 +7,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingPathVariableException;
 import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -17,7 +18,8 @@ import org.springframework.web.multipart.MultipartException;
  * @since 2018/4/26 16:35
  * email abtion@outlook.com
  */
-public class BaseExceptionHandler {
+@ControllerAdvice
+public class BaseExceptionHandler{
     @ExceptionHandler(Exception.class)
     @ResponseStatus(value = HttpStatus.ACCEPTED)
     @ResponseBody

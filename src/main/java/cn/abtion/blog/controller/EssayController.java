@@ -1,6 +1,7 @@
 package cn.abtion.blog.controller;
 
 import cn.abtion.blog.common.Response;
+import cn.abtion.blog.common.Utils;
 import cn.abtion.blog.domain.Essay;
 import cn.abtion.blog.domain.User;
 import cn.abtion.blog.dto.request.CreateEssayRequest;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * @author abtion
@@ -40,9 +42,11 @@ public class EssayController {
     @PostMapping("/update")
     public Response updateEssay(@RequestBody @Valid Essay essay, HttpServletRequest request) throws BaseException {
         User user = (User) request.getAttribute("user");
-        if (user.getId() != essay.getAuthorId() || user.getType() > 1) {
+        if (user.getId() != essay.getAuthorId() && user.getType() > 1) {
             throw new PermissionDeniedException();
         }
+        long timestamp = Utils.createTimestamp();
+        essay.setUpdateAt(timestamp);
         if (!essayService.updateEssay(essay)) {
             throw new UnknownException("文章更新失败");
         }
@@ -59,6 +63,9 @@ public class EssayController {
         essay.setName(createEssayRequest.getName());
         essay.setTag(createEssayRequest.getTag());
         essay.setViewNum(0);
+        long timestamp = Utils.createTimestamp();
+        essay.setCreateAt(timestamp);
+        essay.setUpdateAt(timestamp);
 
         if (!essayService.createEssay(essay)){
             throw new UnknownException("文章创建失败");
@@ -71,4 +78,10 @@ public class EssayController {
                                   @PathVariable long authorId)throws BaseException{
         return new Response(0,essayService.getUserEssays(page,size,authorId));
     }
+
+    @GetMapping("/most-view")
+    public Response getMostViewEssays()throws BaseException{
+        return new Response(0,essayService.getMostViewEssays(30));
+    }
+
 }

@@ -17,4 +17,6 @@ public interface EssayMapper {
     Essay getEssay(long id);
     Collection<Essay> getUserEssays(@Param("page")int page,@Param("size")int size,@Param("userId")long userId);
     Collection<Essay> getMostViewEssays(@Param("num")int num);
+    Collection<String> getAllTags(@Param("authorId")long authorId);
+    Collection<Essay> getEssaysByTag(@Param("tag")String tag);
 }

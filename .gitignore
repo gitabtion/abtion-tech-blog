@@ -2,3 +2,4 @@
 build/
 src/main/resource/application.properties
 out/
+build/

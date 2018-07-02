@@ -10,7 +10,7 @@ import java.util.Collection;
  * email abtion@outlook.com
  */
 public interface CommentMapper {
-    void createComment(Comment comment);
-    Collection<Comment> getCommentFromEssayId(long essayId);
+    int createComment(Comment comment);
+    Collection<Comment> getCommentsByEssayId(long essayId);
     int deleteComment(long id);
 }

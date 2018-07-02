@@ -13,6 +13,8 @@ public class Essay extends Model {
     private String content;
     private int flag;
     private long viewNum;
+    private long createAt;
+    private long updateAt;
 
     public Essay() {
     }
@@ -81,5 +83,21 @@ public class Essay extends Model {
 
     public void setViewNum(long viewNum) {
         this.viewNum = viewNum;
+    }
+
+    public long getCreateAt() {
+        return createAt;
+    }
+
+    public void setCreateAt(long createAt) {
+        this.createAt = createAt;
+    }
+
+    public long getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(long updateAt) {
+        this.updateAt = updateAt;
     }
 }

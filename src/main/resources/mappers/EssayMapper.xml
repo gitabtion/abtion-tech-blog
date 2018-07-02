@@ -3,8 +3,8 @@
 
 <mapper namespace="cn.abtion.blog.mappers.EssayMapper">
     <insert id="createEssay" useGeneratedKeys="true" keyProperty="id" parameterType="cn.abtion.blog.domain.Essay">
-        INSERT INTO essays(id, author_id, tag, name, content, flag,view_num)
-        VALUES (#{id}, #{authorId}, #{tag}, #{name}, #{content}, #{flag},#{viewNum})
+        INSERT INTO essays(id, author_id, tag, name, content, flag,view_num,create_at,update_at)
+        VALUES (#{id}, #{authorId}, #{tag}, #{name}, #{content}, #{flag},#{viewNum},#{createAt},#{updateAt})
     </insert>
     <update id="updateEssay" parameterType="cn.abtion.blog.domain.Essay">
         UPDATE essays SET
@@ -12,7 +12,9 @@
         name = #{name},
         content = #{content},
         flag = #{flag},
-        view_num = #{viewNum}
+        view_num = #{viewNum},
+        create_at = #{createAt},
+        update_at = #{updateAt}
         WHERE id = #{id}
     </update>
     <delete id="deleteEssay">
@@ -25,6 +27,12 @@
         select * from essays where author_id = #{userId}
     </select>
     <select id="getMostViewEssays" resultType="cn.abtion.blog.domain.Essay">
-        select * from essays order by desc limit 0,#{num}
+        select * from essays order by view_num desc limit 0,#{num}
+    </select>
+    <select id="getAllTags" resultType="String">
+        select tag from essays where author_id = #{authorId}
+    </select>
+    <select id="getEssaysByTag" resultType="cn.abtion.blog.domain.Essay">
+        select * from essays where tag = #{tag}
     </select>
 </mapper>

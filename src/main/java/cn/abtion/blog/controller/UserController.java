@@ -3,6 +3,7 @@ package cn.abtion.blog.controller;
 import cn.abtion.blog.common.Encrypt;
 import cn.abtion.blog.common.Response;
 import cn.abtion.blog.common.Utils;
+import cn.abtion.blog.domain.Essay;
 import cn.abtion.blog.domain.User;
 import cn.abtion.blog.dto.request.UpdatePasswordRequest;
 import cn.abtion.blog.dto.request.UpdateUserInfoRequest;
@@ -14,6 +15,7 @@ import cn.abtion.blog.exception.BaseException;
 import cn.abtion.blog.exception.UnknownException;
 import cn.abtion.blog.exception.general.FormValidatorException;
 import cn.abtion.blog.exception.general.PasswordException;
+import cn.abtion.blog.service.EssayService;
 import cn.abtion.blog.service.TokenService;
 import cn.abtion.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 /**
  * @author abtion
@@ -36,6 +39,8 @@ public class UserController {
     UserService userService;
     @Autowired
     TokenService tokenService;
+    @Autowired
+    EssayService essayService;
 
     @GetMapping("/{userId}/info")
     public Response getUserInfo(@PathVariable long userId) {
@@ -110,5 +115,27 @@ public class UserController {
        return new Response(0,null);
 
    }
+
+    @GetMapping("/{authorId}/tags")
+    public Response getAllTags(@PathVariable long authorId)throws BaseException{
+        return new Response(0,essayService.getAllTags(authorId));
+    }
+
+    @GetMapping("/{authorId}/{tag}")
+    public Response getEssaysByTag(@PathVariable String tag,@PathVariable long authorId,HttpServletRequest request)throws BaseException{
+        User user = (User) request.getAttribute("user");
+        ArrayList<Essay> essays = new ArrayList<>(essayService.getEssaysByTag(tag));
+        if (authorId==user.getId()||user.getType()>1){
+            return new Response(0,essays);
+        }else {
+            ArrayList<Essay> temp = new ArrayList<>();
+            for (Essay essay:essays){
+                if (essay.getFlag()==0){
+                    temp.add(essay);
+                }
+            }
+            return new Response(0,temp);
+        }
+    }
 
 }

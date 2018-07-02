@@ -37,6 +37,8 @@ public class TokenInterceptor implements HandlerInterceptor {
         add("/user/register");
         add("/user/login");
         add("/error");
+        add("/essay/most-view");
+        add("user/*/info");
     }};
 
     @Override

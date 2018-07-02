@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.beans.Transient;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -42,6 +43,15 @@ public class EssayService {
 
     public boolean createEssay(Essay essay){
         return essayMapper.createEssay(essay)==1;
+    }
+
+    public List<String> getAllTags(long authorId){
+        HashSet<String> tags = new HashSet<>(essayMapper.getAllTags(authorId));
+        return new ArrayList<>(tags);
+    }
+
+    public List<Essay> getEssaysByTag(String tag){
+        return new ArrayList<>(essayMapper.getEssaysByTag(tag));
     }
 
 }

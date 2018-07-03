@@ -19,7 +19,6 @@ public class CorsInterceptor implements HandlerInterceptor {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Allow-Headers", "token, accept, content-type, X-Requested-With,authorization");
-        System.out.println("cors==========================");
         return true;
     }
 

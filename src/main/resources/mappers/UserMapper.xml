@@ -27,10 +27,10 @@
         password = #{password},
         signature = #{signature},
         sex = #{sex},
-        type = #{type}
+        type = #{type},
         add_on = #{addOn},
-        created_at = #{createAt},
-        updated_at = #{updateAt}
+        create_at = #{createAt},
+        update_at = #{updateAt}
         WHERE id = #{id};
     </update>
 </mapper>

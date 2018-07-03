@@ -30,7 +30,9 @@ public class TokenInterceptor implements HandlerInterceptor {
     private UserService userService;
 
     private ArrayList<String> unCheckUrlsRegex = new ArrayList<>() {{
-
+        add("/essay/\\d+");
+        add("/comments/\\d+");
+        add("/user/\\d+/\\w+");
     }};
 
     private ArrayList<String> unCheckUrlNormal = new ArrayList<>() {{
@@ -38,7 +40,6 @@ public class TokenInterceptor implements HandlerInterceptor {
         add("/user/login");
         add("/error");
         add("/essay/most-view");
-        add("user/*/info");
     }};
 
     @Override
@@ -71,7 +72,6 @@ public class TokenInterceptor implements HandlerInterceptor {
         }
 
         User user = userService.getUserById(userId);
-        System.out.println(user);
         httpServletRequest.setAttribute("user",user);
 
         return true;
@@ -79,12 +79,10 @@ public class TokenInterceptor implements HandlerInterceptor {
 
     @Override
     public void postHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, ModelAndView modelAndView) throws Exception {
-        System.out.println("postHandle========================");
     }
 
     @Override
     public void afterCompletion(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o, Exception e) throws Exception {
-        System.out.println("afterCompletion================");
     }
 
 }

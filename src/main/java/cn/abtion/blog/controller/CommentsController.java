@@ -43,6 +43,6 @@ public class CommentsController {
         if (!commentService.createComment(comment)){
             throw new UnknownException("评论失败");
         }
-        return new Response(0,comment.getId());
+        return new Response(0,commentService.getCommentsByEssayId(comment.getEssayId()));
     }
 }

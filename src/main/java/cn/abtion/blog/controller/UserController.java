@@ -59,6 +59,7 @@ public class UserController {
         user.setSex(2);     // 0 女，1 男，2 未知
         user.setSignature(registerRequest.getSignature());
         user.setType(2);
+        user.setAvatar("http://oum3tk6e0.bkt.clouddn.com//blog/head/blog_head_6.png");
         long timestamp = Utils.createTimestamp();
         user.setCreateAt(timestamp);
         user.setUpdateAt(timestamp);
@@ -91,12 +92,14 @@ public class UserController {
         user.setName(updateUserInfoRequest.getName());
         user.setSex(updateUserInfoRequest.getSex());
         user.setSignature(updateUserInfoRequest.getSignature());
-        user.setAddOn(updateUserInfoRequest.getAddOn());
-        user.setAvatar(updateUserInfoRequest.getAvatar());
+        long timestamp = Utils.createTimestamp();
+        System.out.println(timestamp);
+        user.setUpdateAt(timestamp);
+        user.setAddOn("");
         if (!userService.updateUser(user)){
             throw new UnknownException("更新用户信息失败");
         }
-        return new Response(0,null);
+        return new Response(0,user);
     }
 
    @PostMapping("/password")
@@ -125,7 +128,7 @@ public class UserController {
     public Response getEssaysByTag(@PathVariable String tag,@PathVariable long authorId,HttpServletRequest request)throws BaseException{
         User user = (User) request.getAttribute("user");
         ArrayList<Essay> essays = new ArrayList<>(essayService.getEssaysByTag(tag));
-        if (authorId==user.getId()||user.getType()>1){
+        if (user!=null&&(authorId==user.getId()||user.getType()>1)){
             return new Response(0,essays);
         }else {
             ArrayList<Essay> temp = new ArrayList<>();
